@@ -1,23 +1,55 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import mockUsers from './mockUsers.json';
 
 function App() {
+  const [emailInput, setEmailInput] = useState('');
+  const [user, setUser] = useState(null);
+  const [error, setError] = useState('');
+  const [searched, setSearched] = useState(false); 
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setSearched(true);
+
+    const match = mockUsers.find((u) => u.email === emailInput); 
+    if (match) {
+      setUser(match);
+      setError('');
+    } else {
+      setUser(null);
+      setError('User not found');
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <div style={{ padding: '2rem' }}>
+      <h1>Email Lookup</h1>
+      <form onSubmit={handleSearch}>
+        <input
+          type="text"
+          placeholder="Enter email"
+          value={emailInput}
+          onChange={(e) => setEmailInput(e.target.value)}
+        />
+        <button type="submit">Search</button>
+      </form>
+
+      {!searched && <p>Welcome!</p>} 
+
+      <div style={{ marginTop: '2rem' }}>
+        <p
+          style={{
+            fontWeight: user?.accountType === 'Premium' ? 'bold' : 'normal',
+          }}
         >
-          Learn React
-        </a>
-      </header>
+          Name: {user?.fullName}
+        </p>
+        <p>Email: {user?.email}</p> 
+        <p>Subscribed: {user?.isSubscribed ? 'Yes' : 'No'}</p>
+        <p>Account Type: {user?.accountType}</p>
+      </div>
+
+      {error && <p style={{ color: 'red' }}>{error}</p>}
     </div>
   );
 }

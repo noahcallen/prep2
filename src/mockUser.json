@@ -1,0 +1,20 @@
+[
+  {
+    "email": "jane@example.com",
+    "fullName": "Jane Doe",
+    "isSubscribed": true,
+    "accountType": "Free"
+  },
+  {
+    "email": " john@example.com ",
+    "fullName": "John Smith",
+    "isSubscribed": false,
+    "accountType": "Premium"
+  },
+  {
+    "email": null,
+    "fullName": "Alex Johnson",
+    "isSubscribed": true,
+    "accountType": "Free"
+  }
+]
